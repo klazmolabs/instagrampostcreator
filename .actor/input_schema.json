@@ -9,7 +9,6 @@
       "type": "string",
       "description": "Full URL of a njnewshub.com article to turn into an Instagram post.\n\nExamples:\n- `https://njnewshub.com/bayonne/hudson-county-community-market-bayonne-food-pantry`\n- `https://njnewshub.com/new-jersey/mare-french-bistro-spring-lake`\n\nLeave empty to auto-pick a story from the homepage using the selection below.",
       "editor": "textfield",
-      "prefill": "",
       "example": "https://njnewshub.com/bayonne/hudson-county-community-market-bayonne-food-pantry",
       "nullable": true,
       "sectionCaption": "Article selection",
@@ -57,8 +56,7 @@
       "editor": "stringList",
       "prefill": ["NewJersey", "NJNews", "NJNewsHub"],
       "default": ["NewJersey", "NJNews", "NJNewsHub"],
-      "example": ["NewJersey", "NJNews", "NJNewsHub"],
-      "uniqueItems": true
+      "example": ["NewJersey", "NJNews", "NJNewsHub"]
     },
     "includeArticleLink": {
       "title": "Include article link",
