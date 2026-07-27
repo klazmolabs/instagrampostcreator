@@ -129,13 +129,19 @@ function randomToken(len) {
 
 /**
  * Convert any image buffer Instagram can display into a JPEG buffer.
+ * Preserves an already-square 1080 canvas (does not re-crop the composed post).
  * @param {Buffer} imageBuffer
  */
 export async function toInstagramJpeg(imageBuffer) {
-    return sharp(imageBuffer)
-        .rotate()
-        .resize(1080, 1080, { fit: 'cover', position: 'attention' })
-        .jpeg({ quality: 92, chromaSubsampling: '4:4:4' })
+    const image = sharp(imageBuffer).rotate();
+    const meta = await image.metadata();
+    const pipeline =
+        meta.width === 1080 && meta.height === 1080
+            ? image
+            : image.resize(1080, 1080, { fit: 'cover', position: 'centre' });
+
+    return pipeline
+        .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
         .toBuffer();
 }
 

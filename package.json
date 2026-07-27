@@ -18,6 +18,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "apify": "^3.4.2",
     "cheerio": "^1.0.0",
     "sharp": "^0.33.5"
