@@ -44,6 +44,15 @@ describe('formatInstagramCaption', () => {
         const { caption } = formatInstagramCaption(article, { includeKeyPoints: false });
         assert.doesNotMatch(caption, /• Point one/);
     });
+
+    it('respects includeArticleLink and ctaText', () => {
+        const { caption } = formatInstagramCaption(article, {
+            includeArticleLink: false,
+            ctaText: 'Follow for more NJ news',
+        });
+        assert.doesNotMatch(caption, /Read more:/);
+        assert.match(caption, /Follow for more NJ news/);
+    });
 });
 
 describe('pickArticle', () => {

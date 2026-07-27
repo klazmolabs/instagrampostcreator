@@ -7,15 +7,29 @@ Apify Actor that picks an article from [njnewshub.com](https://njnewshub.com) an
 
 ## Input
 
+The Apify Console form is defined in `.actor/input_schema.json` and is grouped into three sections:
+
+### Article selection
 | Field | Description | Default |
 | --- | --- | --- |
 | `articleUrl` | Specific njnewshub.com article URL. Leave empty to auto-pick. | _(empty)_ |
 | `selection` | `featured` / `latest` / `random` when auto-picking | `featured` |
+
+### Caption
+| Field | Description | Default |
+| --- | --- | --- |
 | `includeKeyPoints` | Include bullet key points in the caption | `true` |
 | `maxCaptionLength` | Soft cap for caption length | `2100` |
 | `extraHashtags` | Extra hashtags to append | `NewJersey`, `NJNews`, `NJNewsHub` |
+| `includeArticleLink` | Append a “Read more: …” line | `true` |
+| `ctaText` | Short CTA line before hashtags | `Via NJ News Hub` |
+
+### Instagram image
+| Field | Description | Default |
+| --- | --- | --- |
 | `generateImage` | Build the square Instagram image | `true` |
 | `imageStyle` | `bottom-gradient` / `full-overlay` / `image-only` | `bottom-gradient` |
+| `brandLabel` | Brand line on the generated image | `NJ NEWS HUB` |
 
 ## Output
 

@@ -1,0 +1,25 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "NJ News Hub Instagram post output",
+  "description": "Instagram caption/dataset row and generated square image from an njnewshub.com article.",
+  "properties": {
+    "post": {
+      "type": "string",
+      "title": "Instagram post data",
+      "description": "Dataset items with caption, hashtags, article metadata, and image keys.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    },
+    "outputJson": {
+      "type": "string",
+      "title": "OUTPUT record",
+      "description": "Full result object stored in the default key-value store.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/OUTPUT"
+    },
+    "images": {
+      "type": "string",
+      "title": "Generated images",
+      "description": "Key-value store keys, including instagram-<slug>.png.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys"
+    }
+  }
+}

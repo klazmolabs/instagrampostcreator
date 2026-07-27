@@ -20,8 +20,11 @@ try {
         includeKeyPoints = true,
         maxCaptionLength = 2100,
         extraHashtags = ['NewJersey', 'NJNews', 'NJNewsHub'],
+        includeArticleLink = true,
+        ctaText = 'Via NJ News Hub',
         generateImage = true,
         imageStyle = 'bottom-gradient',
+        brandLabel = 'NJ NEWS HUB',
     } = input;
 
     log.info('Resolving NJ News Hub article…', { articleUrl: articleUrl || null, selection });
@@ -33,6 +36,8 @@ try {
         includeKeyPoints,
         maxCaptionLength,
         extraHashtags,
+        includeArticleLink,
+        ctaText,
     });
 
     let instagramImageKey = null;
@@ -45,6 +50,7 @@ try {
             headline: article.headline,
             city: article.city,
             style: imageStyle,
+            brandLabel,
         });
 
         instagramImageKey = `instagram-${article.slug || 'post'}.png`;

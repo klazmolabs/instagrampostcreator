@@ -5,7 +5,7 @@
 import sharp from 'sharp';
 
 const SIZE = 1080;
-const BRAND = 'NJ NEWS HUB';
+const DEFAULT_BRAND = 'NJ NEWS HUB';
 
 /**
  * Wrap text into lines that fit within maxCharsPerLine.
@@ -44,9 +44,9 @@ function escapeXml(value) {
 
 /**
  * Build SVG overlay for the square canvas.
- * @param {{ headline: string, city?: string|null, style: string }} opts
+ * @param {{ headline: string, city?: string|null, style: string, brandLabel?: string|null }} opts
  */
-function buildOverlaySvg({ headline, city, style }) {
+function buildOverlaySvg({ headline, city, style, brandLabel = DEFAULT_BRAND }) {
     const lines = wrapText(headline, style === 'full-overlay' ? 26 : 30);
     const lineHeight = style === 'full-overlay' ? 58 : 52;
     const startY =
@@ -66,6 +66,11 @@ function buildOverlaySvg({ headline, city, style }) {
         : '';
 
     const brandY = SIZE - 48;
+    const brand =
+        brandLabel && String(brandLabel).trim()
+            ? `<text x="540" y="${brandY}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4" fill="#ffffff">${escapeXml(String(brandLabel).trim())}</text>`
+            : '';
+
     const gradient =
         style === 'full-overlay'
             ? `<rect width="1080" height="1080" fill="rgba(8,18,36,0.55)"/>`
@@ -83,7 +88,7 @@ function buildOverlaySvg({ headline, city, style }) {
         ${gradient}
         ${cityLabel}
         ${textLines}
-        <text x="540" y="${brandY}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4" fill="#ffffff">${BRAND}</text>
+        ${brand}
       </svg>
     `);
 }
@@ -109,7 +114,7 @@ export async function downloadImage(url) {
 
 /**
  * Create a 1080×1080 Instagram-ready PNG from the article image.
- * @param {{ imageUrl: string, headline: string, city?: string|null, style?: string }} opts
+ * @param {{ imageUrl: string, headline: string, city?: string|null, style?: string, brandLabel?: string|null }} opts
  * @returns {Promise<Buffer>}
  */
 export async function createInstagramImage({
@@ -117,6 +122,7 @@ export async function createInstagramImage({
     headline,
     city = null,
     style = 'bottom-gradient',
+    brandLabel = DEFAULT_BRAND,
 }) {
     if (!imageUrl) {
         throw new Error('Cannot create Instagram image without an article image URL.');
@@ -132,7 +138,7 @@ export async function createInstagramImage({
         return base.toBuffer();
     }
 
-    const overlay = buildOverlaySvg({ headline, city, style });
+    const overlay = buildOverlaySvg({ headline, city, style, brandLabel });
     return sharp(await base.toBuffer())
         .composite([{ input: overlay, top: 0, left: 0 }])
         .png()

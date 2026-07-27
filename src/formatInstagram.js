@@ -60,13 +60,21 @@ function truncate(text, max) {
 /**
  * Build Instagram caption from article fields.
  * @param {object} article
- * @param {{ includeKeyPoints?: boolean, maxCaptionLength?: number, extraHashtags?: string[] }} options
+ * @param {{
+ *   includeKeyPoints?: boolean,
+ *   maxCaptionLength?: number,
+ *   extraHashtags?: string[],
+ *   includeArticleLink?: boolean,
+ *   ctaText?: string|null,
+ * }} options
  */
 export function formatInstagramCaption(article, options = {}) {
     const {
         includeKeyPoints = true,
         maxCaptionLength = 2100,
         extraHashtags = DEFAULT_HASHTAGS,
+        includeArticleLink = true,
+        ctaText = 'Via NJ News Hub',
     } = options;
 
     const hashtags = buildHashtags(article, extraHashtags);
@@ -93,10 +101,16 @@ export function formatInstagramCaption(article, options = {}) {
         lines.push('');
     }
 
-    lines.push(`Read more: ${article.articleUrl}`);
-    lines.push('');
-    lines.push('Via NJ News Hub');
-    lines.push('');
+    if (includeArticleLink && article.articleUrl) {
+        lines.push(`Read more: ${article.articleUrl}`);
+        lines.push('');
+    }
+
+    if (ctaText && String(ctaText).trim()) {
+        lines.push(String(ctaText).trim());
+        lines.push('');
+    }
+
     lines.push(hashtags.join(' '));
 
     let caption = lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();

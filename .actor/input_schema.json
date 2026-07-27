@@ -1,61 +1,115 @@
 {
-  "title": "NJ News Hub Instagram Post Creator",
+  "title": "NJ News Hub → Instagram Post",
   "type": "object",
   "schemaVersion": 1,
+  "description": "Pick an article from njnewshub.com and generate an Instagram-ready caption plus a 1080×1080 image from the article photo.\n\n**How to use**\n1. Leave Article URL empty to auto-pick from the homepage, or paste a specific njnewshub.com story URL.\n2. Tune the caption (key points, hashtags, length).\n3. Choose whether to generate a square Instagram image and how text should appear on it.\n\nResults are saved to the dataset and key-value store (`OUTPUT` + `instagram-<slug>.png`).",
   "properties": {
     "articleUrl": {
       "title": "Article URL",
       "type": "string",
-      "description": "Optional. Full njnewshub.com article URL. Leave empty to auto-pick from the homepage.",
+      "description": "Full URL of a njnewshub.com article to turn into an Instagram post.\n\nExamples:\n- `https://njnewshub.com/bayonne/hudson-county-community-market-bayonne-food-pantry`\n- `https://njnewshub.com/new-jersey/mare-french-bistro-spring-lake`\n\nLeave empty to auto-pick a story from the homepage using the selection below.",
       "editor": "textfield",
-      "prefill": ""
+      "prefill": "",
+      "example": "https://njnewshub.com/bayonne/hudson-county-community-market-bayonne-food-pantry",
+      "nullable": true,
+      "sectionCaption": "Article selection",
+      "sectionDescription": "Choose a specific story, or leave the URL empty and let the Actor pick one from njnewshub.com."
     },
     "selection": {
-      "title": "Auto-pick selection",
+      "title": "Auto-pick mode",
       "type": "string",
-      "description": "Which homepage story to use when no article URL is provided.",
+      "description": "Used only when Article URL is empty.\n\n- **Featured** — homepage top/hero story\n- **Latest** — first story from the Latest section\n- **Random** — random story currently shown on the homepage",
+      "editor": "select",
       "enum": ["featured", "latest", "random"],
-      "enumTitles": ["Featured (top story)", "First latest story", "Random from homepage"],
-      "default": "featured"
+      "enumTitles": [
+        "Featured (homepage hero)",
+        "Latest (first in Latest grid)",
+        "Random homepage story"
+      ],
+      "default": "featured",
+      "prefill": "featured",
+      "example": "featured"
     },
     "includeKeyPoints": {
-      "title": "Include key points in caption",
+      "title": "Include key points",
       "type": "boolean",
-      "description": "Add article key points as bullet lines in the Instagram caption.",
-      "default": true
+      "description": "Add the article’s key points as bullet lines (•) in the Instagram caption.",
+      "default": true,
+      "editor": "checkbox",
+      "sectionCaption": "Caption",
+      "sectionDescription": "Control what goes into the Instagram caption text."
     },
     "maxCaptionLength": {
       "title": "Max caption length",
       "type": "integer",
-      "description": "Instagram captions can be long; truncate around this character count while keeping hashtags.",
+      "description": "Soft character limit for the finished caption. Hashtags are kept; the body is truncated near this length if needed. Instagram allows up to about 2,200 characters.",
       "default": 2100,
+      "prefill": 2100,
       "minimum": 200,
-      "maximum": 2200
+      "maximum": 2200,
+      "unit": "characters",
+      "editor": "number"
     },
     "extraHashtags": {
       "title": "Extra hashtags",
       "type": "array",
-      "description": "Additional hashtags to append (with or without #).",
+      "description": "Hashtags always appended to the caption (with or without `#`). Article keywords, city, and category are added automatically on top of these.",
       "editor": "stringList",
-      "prefill": ["NewJersey", "NJNews", "NJNewsHub"]
+      "prefill": ["NewJersey", "NJNews", "NJNewsHub"],
+      "default": ["NewJersey", "NJNews", "NJNewsHub"],
+      "example": ["NewJersey", "NJNews", "NJNewsHub"],
+      "uniqueItems": true
+    },
+    "includeArticleLink": {
+      "title": "Include article link",
+      "type": "boolean",
+      "description": "Append a “Read more: …” line with the njnewshub.com article URL.",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "ctaText": {
+      "title": "Call-to-action line",
+      "type": "string",
+      "description": "Short line shown near the end of the caption (before hashtags). Leave empty to omit.",
+      "editor": "textfield",
+      "prefill": "Via NJ News Hub",
+      "default": "Via NJ News Hub",
+      "example": "Via NJ News Hub",
+      "nullable": true
     },
     "generateImage": {
       "title": "Generate Instagram image",
       "type": "boolean",
-      "description": "Download the article picture and compose a 1080×1080 Instagram square with headline overlay.",
-      "default": true
+      "description": "Download the article picture and compose a 1080×1080 PNG saved to the key-value store as `instagram-<slug>.png`.",
+      "default": true,
+      "editor": "checkbox",
+      "sectionCaption": "Instagram image",
+      "sectionDescription": "Build a square post image from the article’s photo."
     },
     "imageStyle": {
       "title": "Image style",
       "type": "string",
-      "description": "How to place text on the article image.",
+      "description": "How headline text is placed on the article image.\n\n- **Bottom gradient** — headline over a dark fade at the bottom (best default)\n- **Full overlay** — centered headline on a darkened full-bleed image\n- **Image only** — cropped square photo with no text overlay",
+      "editor": "select",
       "enum": ["bottom-gradient", "full-overlay", "image-only"],
       "enumTitles": [
-        "Headline on bottom gradient",
-        "Centered headline with dark overlay",
-        "Cropped image only (no text)"
+        "Bottom gradient + headline",
+        "Full dark overlay + centered headline",
+        "Image only (no text)"
       ],
-      "default": "bottom-gradient"
+      "default": "bottom-gradient",
+      "prefill": "bottom-gradient",
+      "example": "bottom-gradient"
+    },
+    "brandLabel": {
+      "title": "Brand label on image",
+      "type": "string",
+      "description": "Small brand line drawn at the bottom of the generated image (e.g. NJ NEWS HUB). Ignored when Image style is “Image only”.",
+      "editor": "textfield",
+      "prefill": "NJ NEWS HUB",
+      "default": "NJ NEWS HUB",
+      "example": "NJ NEWS HUB",
+      "nullable": true
     }
   },
   "required": []
