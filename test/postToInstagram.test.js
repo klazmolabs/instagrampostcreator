@@ -1,6 +1,11 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { extractSessionId, extractUserIdFromSession } from '../src/postToInstagram.js';
+import {
+    extractSessionId,
+    extractUserIdFromSession,
+    extractCookieValue,
+    buildCookieHeader,
+} from '../src/postToInstagram.js';
 
 describe('extractSessionId', () => {
     it('accepts a bare session id', () => {
@@ -34,5 +39,31 @@ describe('extractUserIdFromSession', () => {
 
     it('returns null when user id is missing', () => {
         assert.equal(extractUserIdFromSession('not-a-session'), null);
+    });
+});
+
+describe('buildCookieHeader', () => {
+    it('builds cookie header and derives ds_user_id + csrftoken', () => {
+        const auth = buildCookieHeader({ sessionId: '111%3Asecret%3A1', csrfToken: 'csrf123' });
+        assert.match(auth.cookieHeader, /sessionid=111%3Asecret%3A1/);
+        assert.match(auth.cookieHeader, /ds_user_id=111/);
+        assert.match(auth.cookieHeader, /csrftoken=csrf123/);
+        assert.equal(auth.userId, '111');
+    });
+
+    it('parses a full cookie paste', () => {
+        const auth = buildCookieHeader({
+            sessionId: '',
+            cookies: 'sessionid=222%3Ax%3A2; csrftoken=tok; ds_user_id=222; mid=abc',
+        });
+        assert.equal(auth.sessionId, '222%3Ax%3A2');
+        assert.equal(auth.csrfToken, 'tok');
+        assert.match(auth.cookieHeader, /mid=abc/);
+    });
+});
+
+describe('extractCookieValue', () => {
+    it('reads named cookies', () => {
+        assert.equal(extractCookieValue('a=1; csrftoken=zzz; b=2', 'csrftoken'), 'zzz');
     });
 });

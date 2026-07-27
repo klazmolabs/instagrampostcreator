@@ -36,9 +36,13 @@ The Apify Console form is defined in `.actor/input_schema.json` and is grouped i
 | --- | --- | --- |
 | `postToInstagram` | Upload the generated image + caption to Instagram | `false` |
 | `instagramSessionId` | Secret `sessionid` cookie (required when posting) | _(empty)_ |
-| `instagramUsername` | Optional username used as a stable device seed | _(empty)_ |
+| `instagramCsrfToken` | Optional `csrftoken` cookie (recommended) | _(empty)_ |
+| `instagramCookies` | Optional full Cookie header from a logged-in request | _(empty)_ |
+| `instagramUsername` | Optional username for logs | _(empty)_ |
 
-**How to get `sessionid`:** open Instagram in a browser while logged in → DevTools → Application → Cookies → `https://www.instagram.com` → copy the `sessionid` value. Treat it like a password; it grants account access until it expires or you log out.
+**How to get cookies:** open Instagram in a browser while logged in → DevTools → Application → Cookies → `https://www.instagram.com` → copy `sessionid` (and ideally `csrftoken`). Or copy the full `Cookie` header from any logged-in network request. Treat these like passwords.
+
+Publishing uses Instagram’s **web upload API**. Browser `sessionid` cookies do not work with the Android private API.
 
 ## Output
 

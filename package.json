@@ -20,8 +20,6 @@
   "dependencies": {
     "apify": "^3.4.2",
     "cheerio": "^1.0.0",
-    "instagram-private-api": "^1.46.1",
-    "sharp": "^0.33.5",
-    "tough-cookie": "^6.0.2"
+    "sharp": "^0.33.5"
   }
 }

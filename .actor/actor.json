@@ -4,7 +4,7 @@
   "name": "njnewshub-instagram-post-creator",
   "title": "NJ News Hub → Instagram Post",
   "description": "Picks an article from njnewshub.com and formats an Instagram-ready caption plus a square image built from the article photo. Optionally posts to Instagram with a session id.",
-  "version": "1.0",
+  "version": "1.1",
   "buildTag": "latest",
   "meta": {
     "templateId": "js-start",

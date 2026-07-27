@@ -112,25 +112,41 @@
     "postToInstagram": {
       "title": "Post to Instagram",
       "type": "boolean",
-      "description": "When enabled, the Actor uploads the generated image + caption to Instagram using your session id.\n\nLeave off to only generate the caption/image without publishing.",
+      "description": "When enabled, the Actor uploads the generated image + caption to Instagram using your browser session cookies.\n\nLeave off to only generate the caption/image without publishing.",
       "default": false,
       "editor": "checkbox",
       "sectionCaption": "Post to Instagram",
-      "sectionDescription": "Automatically publish the generated post. Requires a valid Instagram sessionid cookie from a logged-in browser."
+      "sectionDescription": "Publish via Instagram’s web upload API using cookies from a logged-in browser. A browser sessionid works here; the Android private API does not."
     },
     "instagramSessionId": {
       "title": "Instagram session id",
       "type": "string",
-      "description": "The `sessionid` cookie from Instagram (browser DevTools → Application → Cookies → instagram.com → sessionid).\n\nYou can paste:\n- just the sessionid value, or\n- `sessionid=...`, or\n- a full Cookie header that includes sessionid\n\nRequired when **Post to Instagram** is enabled. Treated as a secret and never shown in logs.",
-      "editor": "textfield",
+      "description": "The `sessionid` cookie from Instagram (DevTools → Application → Cookies → `https://www.instagram.com` → `sessionid`).\n\nYou can paste just the value, `sessionid=...`, or put a full Cookie header in **Instagram cookies** below.\n\nRequired when posting (unless a full Cookie header is provided). Treated as a secret.",
+      "editor": "textarea",
       "isSecret": true,
       "nullable": true,
       "example": "1234567890%3AABCDEFEXAMPLE%3A12"
     },
+    "instagramCsrfToken": {
+      "title": "Instagram CSRF token",
+      "type": "string",
+      "description": "Optional but recommended. The `csrftoken` cookie from the same Instagram browser tab. Improves upload reliability.",
+      "editor": "textfield",
+      "isSecret": true,
+      "nullable": true
+    },
+    "instagramCookies": {
+      "title": "Instagram cookies (optional full header)",
+      "type": "string",
+      "description": "Optional. Paste the full `Cookie` header from a logged-in Instagram request (includes sessionid, csrftoken, ds_user_id, mid, …). Best option if sessionid alone fails.",
+      "editor": "textarea",
+      "isSecret": true,
+      "nullable": true
+    },
     "instagramUsername": {
       "title": "Instagram username",
       "type": "string",
-      "description": "Optional. Your Instagram username (without @). Used as a stable device seed so Instagram sees a consistent client. If omitted, the user id inside the session cookie is used.",
+      "description": "Optional. Your Instagram username (without @), used only for logging.",
       "editor": "textfield",
       "nullable": true,
       "example": "njnewshub"

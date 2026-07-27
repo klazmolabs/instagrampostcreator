@@ -29,12 +29,14 @@ try {
         brandLabel = 'NJ NEWS HUB',
         postToInstagram = false,
         instagramSessionId = '',
+        instagramCsrfToken = '',
+        instagramCookies = '',
         instagramUsername = '',
     } = input;
 
-    if (postToInstagram && !String(instagramSessionId || '').trim()) {
+    if (postToInstagram && !String(instagramSessionId || instagramCookies || '').trim()) {
         throw new Error(
-            'Post to Instagram is enabled but instagramSessionId is missing. Paste your Instagram sessionid cookie in the input form.',
+            'Post to Instagram is enabled but instagramSessionId is missing. Paste your Instagram sessionid cookie (or a full Cookie header) in the input form.',
         );
     }
 
@@ -92,7 +94,9 @@ try {
         }
         log.info('Posting to Instagram…');
         publishResult = await postPhotoToInstagram({
-            sessionId: instagramSessionId,
+            sessionId: instagramSessionId || instagramCookies,
+            csrfToken: instagramCsrfToken,
+            cookies: instagramCookies,
             username: instagramUsername,
             imageBuffer,
             caption,
