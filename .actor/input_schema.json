@@ -1,0 +1,62 @@
+{
+  "title": "NJ News Hub Instagram Post Creator",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "articleUrl": {
+      "title": "Article URL",
+      "type": "string",
+      "description": "Optional. Full njnewshub.com article URL. Leave empty to auto-pick from the homepage.",
+      "editor": "textfield",
+      "prefill": ""
+    },
+    "selection": {
+      "title": "Auto-pick selection",
+      "type": "string",
+      "description": "Which homepage story to use when no article URL is provided.",
+      "enum": ["featured", "latest", "random"],
+      "enumTitles": ["Featured (top story)", "First latest story", "Random from homepage"],
+      "default": "featured"
+    },
+    "includeKeyPoints": {
+      "title": "Include key points in caption",
+      "type": "boolean",
+      "description": "Add article key points as bullet lines in the Instagram caption.",
+      "default": true
+    },
+    "maxCaptionLength": {
+      "title": "Max caption length",
+      "type": "integer",
+      "description": "Instagram captions can be long; truncate around this character count while keeping hashtags.",
+      "default": 2100,
+      "minimum": 200,
+      "maximum": 2200
+    },
+    "extraHashtags": {
+      "title": "Extra hashtags",
+      "type": "array",
+      "description": "Additional hashtags to append (with or without #).",
+      "editor": "stringList",
+      "prefill": ["NewJersey", "NJNews", "NJNewsHub"]
+    },
+    "generateImage": {
+      "title": "Generate Instagram image",
+      "type": "boolean",
+      "description": "Download the article picture and compose a 1080×1080 Instagram square with headline overlay.",
+      "default": true
+    },
+    "imageStyle": {
+      "title": "Image style",
+      "type": "string",
+      "description": "How to place text on the article image.",
+      "enum": ["bottom-gradient", "full-overlay", "image-only"],
+      "enumTitles": [
+        "Headline on bottom gradient",
+        "Centered headline with dark overlay",
+        "Cropped image only (no text)"
+      ],
+      "default": "bottom-gradient"
+    }
+  },
+  "required": []
+}

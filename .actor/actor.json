@@ -1,0 +1,16 @@
+{
+  "actorSpecification": 1,
+  "name": "njnewshub-instagram-post-creator",
+  "title": "NJ News Hub → Instagram Post",
+  "description": "Picks an article from njnewshub.com and formats an Instagram-ready caption plus a square image built from the article photo.",
+  "version": "1.0",
+  "meta": {
+    "templateId": "js-start",
+    "templatePostId": "js-start"
+  },
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "dockerfile": "../Dockerfile"
+}

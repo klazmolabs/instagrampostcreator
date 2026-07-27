@@ -1,0 +1,45 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "articleUrl": { "type": "string", "title": "Article URL", "format": "uri" },
+    "headline": { "type": "string", "title": "Headline" },
+    "caption": { "type": "string", "title": "Instagram caption" },
+    "hashtags": { "type": "array", "title": "Hashtags", "items": { "type": "string" } },
+    "imageUrl": { "type": "string", "title": "Source image URL", "format": "uri" },
+    "instagramImageKey": { "type": "string", "title": "KV store key for Instagram image" },
+    "city": { "type": "string", "title": "City" },
+    "category": { "type": "string", "title": "Category" },
+    "source": { "type": "string", "title": "Source publication" },
+    "summary": { "type": "string", "title": "Summary" }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": [
+          "headline",
+          "caption",
+          "articleUrl",
+          "imageUrl",
+          "instagramImageKey",
+          "city",
+          "category",
+          "source"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "headline": { "label": "Headline", "format": "text" },
+          "caption": { "label": "Caption", "format": "text" },
+          "articleUrl": { "label": "Article", "format": "link" },
+          "imageUrl": { "label": "Source image", "format": "image" },
+          "instagramImageKey": { "label": "IG image key", "format": "text" },
+          "city": { "label": "City", "format": "text" },
+          "category": { "label": "Category", "format": "text" },
+          "source": { "label": "Source", "format": "text" }
+        }
+      }
+    }
+  }
+}
