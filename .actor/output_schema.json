@@ -20,6 +20,12 @@
       "title": "Generated images",
       "description": "Key-value store keys, including instagram-<slug>.png.",
       "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys"
+    },
+    "instagramPost": {
+      "type": "string",
+      "title": "Instagram publish details",
+      "description": "Dataset items include instagramPost.postUrl when publishing succeeds.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items?fields=instagramPost,headline,caption"
     }
   }
 }

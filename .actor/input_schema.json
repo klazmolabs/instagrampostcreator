@@ -2,7 +2,7 @@
   "title": "NJ News Hub → Instagram Post",
   "type": "object",
   "schemaVersion": 1,
-  "description": "Pick an article from njnewshub.com and generate an Instagram-ready caption plus a 1080×1080 image from the article photo.\n\n**How to use**\n1. Leave Article URL empty to auto-pick from the homepage, or paste a specific njnewshub.com story URL.\n2. Tune the caption (key points, hashtags, length).\n3. Choose whether to generate a square Instagram image and how text should appear on it.\n\nResults are saved to the dataset and key-value store (`OUTPUT` + `instagram-<slug>.png`).",
+  "description": "Pick an article from njnewshub.com and generate an Instagram-ready caption plus a 1080×1080 image from the article photo. Optionally publish it to Instagram with your session id.\n\n**How to use**\n1. Leave Article URL empty to auto-pick from the homepage, or paste a specific njnewshub.com story URL.\n2. Tune the caption (key points, hashtags, length).\n3. Choose whether to generate a square Instagram image and how text should appear on it.\n4. To auto-post: enable **Post to Instagram** and paste your Instagram `sessionid` cookie.\n\nResults are saved to the dataset and key-value store (`OUTPUT` + `instagram-<slug>.png`).",
   "properties": {
     "articleUrl": {
       "title": "Article URL",
@@ -110,6 +110,32 @@
       "default": "NJ NEWS HUB",
       "example": "NJ NEWS HUB",
       "nullable": true
+    },
+    "postToInstagram": {
+      "title": "Post to Instagram",
+      "type": "boolean",
+      "description": "When enabled, the Actor uploads the generated image + caption to Instagram using your session id.\n\nLeave off to only generate the caption/image without publishing.",
+      "default": false,
+      "editor": "checkbox",
+      "sectionCaption": "Post to Instagram",
+      "sectionDescription": "Automatically publish the generated post. Requires a valid Instagram sessionid cookie from a logged-in browser."
+    },
+    "instagramSessionId": {
+      "title": "Instagram session id",
+      "type": "string",
+      "description": "The `sessionid` cookie from Instagram (browser DevTools → Application → Cookies → instagram.com → sessionid).\n\nYou can paste:\n- just the sessionid value, or\n- `sessionid=...`, or\n- a full Cookie header that includes sessionid\n\nRequired when **Post to Instagram** is enabled. Treated as a secret and never shown in logs.",
+      "editor": "textfield",
+      "isSecret": true,
+      "nullable": true,
+      "example": "1234567890%3AABCDEFEXAMPLE%3A12"
+    },
+    "instagramUsername": {
+      "title": "Instagram username",
+      "type": "string",
+      "description": "Optional. Your Instagram username (without @). Used as a stable device seed so Instagram sees a consistent client. If omitted, the user id inside the session cookie is used.",
+      "editor": "textfield",
+      "nullable": true,
+      "example": "njnewshub"
     }
   },
   "required": []

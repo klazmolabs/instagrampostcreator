@@ -10,7 +10,8 @@
     "city": { "type": "string", "title": "City" },
     "category": { "type": "string", "title": "Category" },
     "source": { "type": "string", "title": "Source publication" },
-    "summary": { "type": "string", "title": "Summary" }
+    "summary": { "type": "string", "title": "Summary" },
+    "instagramPost": { "type": "object", "title": "Instagram publish result" }
   },
   "views": {
     "overview": {
@@ -22,6 +23,7 @@
           "articleUrl",
           "imageUrl",
           "instagramImageKey",
+          "instagramPost",
           "city",
           "category",
           "source"
@@ -35,6 +37,7 @@
           "articleUrl": { "label": "Article", "format": "link" },
           "imageUrl": { "label": "Source image", "format": "image" },
           "instagramImageKey": { "label": "IG image key", "format": "text" },
+          "instagramPost": { "label": "IG publish", "format": "object" },
           "city": { "label": "City", "format": "text" },
           "category": { "label": "Category", "format": "text" },
           "source": { "label": "Source", "format": "text" }

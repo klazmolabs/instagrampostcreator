@@ -31,6 +31,15 @@ The Apify Console form is defined in `.actor/input_schema.json` and is grouped i
 | `imageStyle` | `bottom-gradient` / `full-overlay` / `image-only` | `bottom-gradient` |
 | `brandLabel` | Brand line on the generated image | `NJ NEWS HUB` |
 
+### Post to Instagram
+| Field | Description | Default |
+| --- | --- | --- |
+| `postToInstagram` | Upload the generated image + caption to Instagram | `false` |
+| `instagramSessionId` | Secret `sessionid` cookie (required when posting) | _(empty)_ |
+| `instagramUsername` | Optional username used as a stable device seed | _(empty)_ |
+
+**How to get `sessionid`:** open Instagram in a browser while logged in → DevTools → Application → Cookies → `https://www.instagram.com` → copy the `sessionid` value. Treat it like a password; it grants account access until it expires or you log out.
+
 ## Output
 
 Each run pushes one dataset item and also stores `OUTPUT` in the default key-value store:
