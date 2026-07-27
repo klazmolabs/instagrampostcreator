@@ -12,6 +12,14 @@ import { Resvg } from '@resvg/resvg-js';
 const SIZE = 1080;
 const DEFAULT_BRAND = 'NJ NEWS HUB';
 
+/** Brand palette: black + green */
+const COLORS = {
+    black: '#0A0A0A',
+    green: '#1F8A4C',
+    greenBright: '#2BB673',
+    white: '#FFFFFF',
+};
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const FONTS_DIR = path.join(__dirname, '..', 'assets', 'fonts');
 
@@ -82,36 +90,44 @@ function buildOverlaySvg({ headline, city, style, brandLabel = DEFAULT_BRAND }) 
     const lineHeight = Math.round(fontSize * 1.22);
 
     const brandY = SIZE - 52;
-    const textBottom = style === 'full-overlay' ? SIZE / 2 + (lines.length * lineHeight) / 2 - 8 : brandY - 64;
+    // Keep more room between source/city label and the headline block.
+    const sourceHeadlineGap = 72;
+    const textBottom =
+        style === 'full-overlay'
+            ? SIZE / 2 + (lines.length * lineHeight) / 2 - 8
+            : brandY - 64;
     const startY = textBottom - (lines.length - 1) * lineHeight;
 
     const textLines = lines
         .map((line, i) => {
             const y = startY + i * lineHeight;
-            return `<text x="540" y="${y}" text-anchor="middle" font-family="Noto Serif" font-size="${fontSize}" font-weight="700" fill="#ffffff">${escapeXml(line)}</text>`;
+            return `<text x="540" y="${y}" text-anchor="middle" font-family="Noto Serif" font-size="${fontSize}" font-weight="700" fill="${COLORS.white}">${escapeXml(line)}</text>`;
         })
         .join('\n');
 
     const cityLabel = city
-        ? `<text x="540" y="${Math.max(48, startY - 40)}" text-anchor="middle" font-family="Noto Sans" font-size="22" font-weight="700" fill="#F2C14E">${escapeXml(String(city).toUpperCase())}</text>`
+        ? `<text x="540" y="${Math.max(48, startY - sourceHeadlineGap)}" text-anchor="middle" font-family="Noto Sans" font-size="22" font-weight="700" fill="${COLORS.greenBright}">${escapeXml(String(city).toUpperCase())}</text>`
         : '';
 
     const brand =
         brandLabel && String(brandLabel).trim()
-            ? `<text x="540" y="${brandY}" text-anchor="middle" font-family="Noto Sans" font-size="18" font-weight="700" fill="#FFFFFF">${escapeXml(String(brandLabel).trim().toUpperCase())}</text>`
+            ? `<text x="540" y="${brandY}" text-anchor="middle" font-family="Noto Sans" font-size="18" font-weight="700" fill="${COLORS.greenBright}">${escapeXml(String(brandLabel).trim().toUpperCase())}</text>`
             : '';
 
     const gradient =
         style === 'full-overlay'
-            ? `<rect width="${SIZE}" height="${SIZE}" fill="rgba(8,18,36,0.58)"/>`
+            ? `<rect width="${SIZE}" height="${SIZE}" fill="rgba(10,10,10,0.62)"/>
+        <rect x="0" y="${SIZE - 8}" width="${SIZE}" height="8" fill="${COLORS.green}"/>`
             : `<defs>
           <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="rgba(8,18,36,0)"/>
-            <stop offset="35%" stop-color="rgba(8,18,36,0.2)"/>
-            <stop offset="100%" stop-color="rgba(8,18,36,0.9)"/>
+            <stop offset="0%" stop-color="rgba(10,10,10,0)"/>
+            <stop offset="30%" stop-color="rgba(10,10,10,0.15)"/>
+            <stop offset="70%" stop-color="rgba(10,10,10,0.72)"/>
+            <stop offset="100%" stop-color="rgba(10,10,10,0.94)"/>
           </linearGradient>
         </defs>
-        <rect width="${SIZE}" height="${SIZE}" fill="url(#g)"/>`;
+        <rect width="${SIZE}" height="${SIZE}" fill="url(#g)"/>
+        <rect x="0" y="${SIZE - 8}" width="${SIZE}" height="8" fill="${COLORS.green}"/>`;
 
     return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" xmlns="http://www.w3.org/2000/svg">
