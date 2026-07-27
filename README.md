@@ -51,6 +51,16 @@ Each run pushes one dataset item and also stores `OUTPUT` in the default key-val
 - `instagramImageUrl` — Apify API URL for the generated image (when running on platform)
 - Article metadata: `headline`, `summary`, `city`, `category`, `source`, `keyPoints`, etc.
 
+## Deploy to Apify (required for the Console form)
+
+The Input tab only shows the form after Apify loads `.actor/actor.json` → `inputSchema`.
+
+1. Push / merge this branch, or connect the Actor’s GitHub integration to it
+2. In Apify Console open the Actor → **Build** (or `apify push` from this repo)
+3. Hard-refresh the **Input** tab — you should see sections for article selection, caption, image, and Instagram posting
+
+If you still see a raw JSON box, the Actor is likely building from a branch that does not contain `.actor/INPUT_SCHEMA.json` (for example an old `main`).
+
 ## Local development
 
 ```bash

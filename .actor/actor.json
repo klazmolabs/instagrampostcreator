@@ -1,17 +1,20 @@
 {
+  "$schema": "https://apify.com/schemas/v1/actor.ide.json",
   "actorSpecification": 1,
   "name": "njnewshub-instagram-post-creator",
   "title": "NJ News Hub → Instagram Post",
-  "description": "Picks an article from njnewshub.com and formats an Instagram-ready caption plus a square image built from the article photo.",
+  "description": "Picks an article from njnewshub.com and formats an Instagram-ready caption plus a square image built from the article photo. Optionally posts to Instagram with a session id.",
   "version": "1.0",
+  "buildTag": "latest",
   "meta": {
     "templateId": "js-start",
-    "templatePostId": "js-start"
+    "generatedBy": "Cursor cloud agent"
   },
-  "input": "./input_schema.json",
-  "output": "./output_schema.json",
+  "inputSchema": "./INPUT_SCHEMA.json",
+  "outputSchema": "./output_schema.json",
   "storages": {
     "dataset": "./dataset_schema.json"
   },
-  "dockerfile": "../Dockerfile"
+  "dockerfile": "../Dockerfile",
+  "readme": "../README.md"
 }
