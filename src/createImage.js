@@ -90,12 +90,14 @@ function buildOverlaySvg({ headline, city, style, brandLabel = DEFAULT_BRAND }) 
     const lineHeight = Math.round(fontSize * 1.22);
 
     const brandY = SIZE - 52;
-    // Keep more room between source/city label and the headline block.
-    const sourceHeadlineGap = 72;
+    // Keep clear space between source/city label and the headline block,
+    // and between the headline and the brand line.
+    const sourceHeadlineGap = 96;
+    const headlineBrandGap = 88;
     const textBottom =
         style === 'full-overlay'
             ? SIZE / 2 + (lines.length * lineHeight) / 2 - 8
-            : brandY - 64;
+            : brandY - headlineBrandGap;
     const startY = textBottom - (lines.length - 1) * lineHeight;
 
     const textLines = lines
